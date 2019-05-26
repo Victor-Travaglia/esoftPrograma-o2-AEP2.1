@@ -1,19 +1,29 @@
 package application;
 
-import entities.Fisica;
-import entities.Juridica;
-
-import java.util.UUID;
+import pessoa.*;
 
 public class Program {
 
     public static void main(String[] args) {
 
-        Fisica pessoaFisica = new Fisica(UUID.randomUUID(), "Victor", "12345678910", "123456789");
-        Juridica pessoaJuridica = new Juridica(UUID.randomUUID(), "Empresa teste", "12345678910111", 10.0);
-        Juridica empresa = new Juridica(UUID.randomUUID(), "Empresa final", "12345678910112", 100.0);
+        try {
+            Pessoa jose = new Fisica("José", "123", new Cpf("07323323037"));
+            Pessoa maria = new Fisica("Maria", "456", new Cpf("75734654086"));
+            Pessoa joao = new Fisica("João", "789", new Cpf("09002535090"));
 
-        empresa.adicionarSocio(pessoaFisica, 10.0);
-        empresa.adicionarSocio(pessoaJuridica, 40.0);
+            Juridica empresa = new Juridica("empresa", new Cnpj("33748964000171"), 50000.0);
+            empresa.adicionarSocio(jose, 20.0);
+            empresa.adicionarSocio(maria, 40.0);
+            empresa.adicionarSocio(joao, 40.0);
+
+            System.out.println("Sócios da Empresa.");
+            empresa.mostrarSocios();
+            System.out.println("Removendo o sócio José.");
+            empresa.removerSocio(jose);
+            empresa.mostrarSocios();
+        }
+        catch (RuntimeException e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
     }
 }
